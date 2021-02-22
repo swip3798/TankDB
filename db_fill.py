@@ -1,7 +1,13 @@
 from sqlalchemy import create_engine, Index, MetaData
 from sqlalchemy.types import VARCHAR
 from sqlalchemy.orm import sessionmaker
-engine = create_engine('mysql://root:passwort@127.0.0.1:5588/tankdb', echo=True)
+
+from dotenv import load_dotenv
+import os
+load_dotenv()
+DB_PASSWORD = os.getenv("MYSQL_ROOT_PASSWORD")
+
+engine = create_engine('mysql://root:{}@127.0.0.1:5588/tankdb'.format(DB_PASSWORD), echo=True)
 Session = sessionmaker(bind=engine)
 session = Session()
 
@@ -15,5 +21,9 @@ META_DATA = MetaData(bind=engine, reflect=True)
 TRAIN_DATA_TABLE = META_DATA.tables['train_data_tmp']
 uuid_index = Index("uuid_index", TRAIN_DATA_TABLE.c.station_uuid)
 uuid_index.create(bind=engine)
-session.execute("RENAME TABLE train_data_tmp TO train_data")
+try:
+    session.execute("RENAME TABLE train_data TO train_data_old, train_data_tmp TO train_data")
+    session.execute("DROP TABLE train_data_old")
+except:
+    session.execute("RENAME TABLE train_data_tmp TO train_data")
 print("Finished")
