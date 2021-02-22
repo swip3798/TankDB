@@ -3,19 +3,26 @@ from sqlalchemy.types import VARCHAR
 from sqlalchemy.orm import sessionmaker
 from train_data_status import TrainDataStatus, Base
 
+import argparse
+import pathlib
+parser = argparse.ArgumentParser(description="Fills MySQL Database table with TrainData")
+parser.add_argument("-p", "--port", dest="port", metavar="PORT", help="MySQL Instance Port", default=5588, type=int)
+parser.add_argument("input_path", help="CSV file path", type=pathlib.Path)
+args = parser.parse_args()
+
 from dotenv import load_dotenv
 import os
 load_dotenv()
 DB_PASSWORD = os.getenv("MYSQL_ROOT_PASSWORD")
 
-engine = create_engine('mysql://root:{}@127.0.0.1:5588/tankdb'.format(DB_PASSWORD), echo=True)
+engine = create_engine('mysql://root:{}@127.0.0.1:{}/tankdb'.format(DB_PASSWORD, args.port), echo=True)
 Base.metadata.create_all(engine)
 Session = sessionmaker(bind=engine)
 session = Session()
 
 import pandas as pd
 print("Read CSV")
-df = pd.read_csv("TrainData.csv")
+df = pd.read_csv(args.input_path)
 print("Write to db")
 df.to_sql("train_data_tmp", engine, if_exists='replace', dtype = {"station_uuid": VARCHAR(50)}, index=False, chunksize=500000)
 print("Create index")
