@@ -3,3 +3,4 @@ sqlalchemy
 pandas
 mpu
 python-dotenv
+tqdm
