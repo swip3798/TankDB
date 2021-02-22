@@ -36,3 +36,19 @@ python gentraindata.py [-p P] [-d D] output_path
 ```
 Der Parameter P beschreibt die Anzahl an Tagen, welche in den Trainingsdaten enthalten sein sollen, standardmäßig 7 Tage. Der Parameter D beschreibt die Anzahl der täglichen Datenpunkte pro Tankstelle, standardmäßig 24 für einen Datenpunkt pro Stunde. Der Output Path ist der Pfad, in welchem die CSV-Datei abgespeichert wird.
 #### db_fill.py
+Dieses Skript ließt den Inhalt der CSV-Datei und importiert diese in die Datenbank Tabelle.
+```
+python db_fill.py [-p PORT] input_path
+```
+Mit dem Parameter -p lässt sich der Port der MySQL-Instanz einstellen. Falls die MySQL-Instanz nicht unter localhost erreichbar ist, kann die URI im Skript angepasst werden (Zeile 18 in db_fill.py).
+### Beispiel für Automatisierung
+Für ein automatisches Aktualisieren der Datenbank empfiehlt sich das Einrichten eines Cronjobs oder etwas Vergleichbares. Die Daten im Tankerkönig Repository werden jeden Tag um 03:03 Uhr hochgeladen und können mit einem ```git pull``` heruntergeladen werden. Auf meinem Server habe ich ein Shell-Skript, welches das Tankerkönig Repository aktualisiert und anschließend beide Python-Skripte ausführt.
+```shell
+#!/bin/sh
+cd /home/username/TankDB/tankerkoenig-data
+git pull
+cd ..
+python3 gentraindata.py TrainData.csv
+python3 db_fill.py TrainData.csv
+```
+Dieses Skript lasse ich über Crontab kurz nach 03:03 laufen. Auf diese Weise sind die Daten in meiner MySQL-Datenbank immer aktuell
