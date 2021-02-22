@@ -51,4 +51,4 @@ cd ..
 python3 gentraindata.py TrainData.csv
 python3 db_fill.py TrainData.csv
 ```
-Dieses Skript lasse ich über Crontab kurz nach 03:03 laufen. Auf diese Weise sind die Daten in meiner MySQL-Datenbank immer aktuell
+Dieses Skript lasse ich über Crontab kurz nach 03:03 laufen. Auf diese Weise sind die Daten in meiner MySQL-Datenbank immer aktuell.
