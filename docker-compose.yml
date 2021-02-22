@@ -1,0 +1,14 @@
+version: '3.1'
+
+volumes:
+  data:
+
+services:
+
+  db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    ports: 
+      - 5588:3306
+    volumes:
+      - data:/var/lib/mysql
