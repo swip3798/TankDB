@@ -11,6 +11,7 @@ Benötigt werden:
 Zunächst muss das Git-Repository geklont werden und die Python Dependencys installiert werden.
 ```
 git clone https://github.com/swip3798/TankDB.git
+cd TankDB
 pip install -r requirements.txt
 ```
 ### Optional MySQL über Docker
