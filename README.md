@@ -24,7 +24,7 @@ MYSQL_PASSWORD=xxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
 Daraufhin kann die MySQL-Instanz mit ```docker-compose up -d``` gestartet werden, erreichbar unter dem Port 5588. Der Port lässt sich in der Yaml-Datei anpassen.
 ### Tankerkönig History Daten
-Anschließend wird das tankerkoenig-data Repository benötigt. Dieses findet man als Git-Repository [hier](https://dev.azure.com/tankerkoenig/_git/tankerkoenig-data). Bitte beachtet die Nutzungsbediengungen für die Verwendung der History Daten. Zum aktuellen Zeitpunkt braucht das Repository etwas über 42GB Speicherplatz und muss übver 7GB beim Klonen herunterladen, Tendenz natürlich steigend.
+Anschließend wird das tankerkoenig-data Repository benötigt. Dieses findet man als Git-Repository [hier](https://dev.azure.com/tankerkoenig/_git/tankerkoenig-data). Bitte beachtet die Nutzungsbediengungen für die Verwendung der History Daten. Zum aktuellen Zeitpunkt braucht das Repository etwas über 42GB Speicherplatz und muss über 7GB beim Klonen herunterladen, Tendenz natürlich steigend.
 ```
 git clone https://tankerkoenig@dev.azure.com/tankerkoenig/tankerkoenig-data/_git/tankerkoenig-data
 ```
